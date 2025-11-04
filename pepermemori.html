@@ -1,0 +1,239 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Paper Memory</title>
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.10.5/font/bootstrap-icons.css" rel="stylesheet">
+  <style>
+    body {
+      background: radial-gradient(circle at center, #1c1c1c 0%, #0b0b0b 100%);
+      color: #f2e9d8;
+      font-family: 'Poppins', sans-serif;
+      overflow-x: hidden;
+      margin: 0;
+      padding: 0;
+    }
+
+    header {
+      text-align: center;
+      padding: 80px 20px 50px;
+      background: linear-gradient(180deg, #181818, #0f0f0f);
+      border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+      box-shadow: 0 0 20px rgba(255, 200, 130, 0.1);
+    }
+
+    header h1 {
+      font-size: 3.2rem;
+      color: #ffcc70;
+      letter-spacing: 3px;
+      text-shadow: 0 0 25px rgba(255, 204, 112, 0.5);
+    }
+
+    header p {
+      color: #c5c5c5;
+      font-size: 1.15rem;
+      max-width: 600px;
+      margin: 15px auto 0;
+      font-style: italic;
+    }
+
+    .game-section {
+      padding: 60px 20px 100px;
+      text-align: center;
+      position: relative;
+    }
+
+    .game-section::before {
+      content: '';
+      position: absolute;
+      top: 0; left: 0;
+      width: 100%; height: 100%;
+      background: url('https://www.transparenttextures.com/patterns/paper-fibers.png');
+      opacity: 0.05;
+      z-index: 0;
+    }
+
+    .game-section h2 {
+      color: #ff914d;
+      font-weight: 700;
+      text-shadow: 0 0 15px rgba(255, 145, 77, 0.5);
+      margin-bottom: 15px;
+    }
+
+    .game-section p {
+      color: #d8d8d8;
+      font-size: 1rem;
+      max-width: 650px;
+      margin: 0 auto 40px;
+      z-index: 1;
+      position: relative;
+    }
+
+    .paper-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(230px, 1fr));
+      gap: 30px;
+      z-index: 1;
+      position: relative;
+    }
+
+    .paper {
+      background: #fff9ed;
+      color: #333;
+      border-radius: 10px;
+      padding: 25px 20px;
+      box-shadow: 0 6px 25px rgba(0, 0, 0, 0.35);
+      transition: all 0.4s ease;
+      cursor: pointer;
+      position: relative;
+      overflow: hidden;
+    }
+
+    .paper:hover {
+      transform: translateY(-8px) scale(1.02);
+      box-shadow: 0 10px 35px rgba(255, 204, 112, 0.3);
+    }
+
+    .paper::before {
+      content: '';
+      position: absolute;
+      top: 0; left: 0;
+      width: 100%; height: 100%;
+      background: url('https://www.transparenttextures.com/patterns/beige-paper.png');
+      opacity: 0.2;
+      z-index: 0;
+    }
+
+    .paper h3 {
+      color: #e67300;
+      font-weight: 700;
+      z-index: 1;
+      position: relative;
+    }
+
+    .paper p {
+      font-size: 0.95rem;
+      line-height: 1.4;
+      margin-top: 10px;
+      z-index: 1;
+      position: relative;
+    }
+
+    .memory-btn {
+      margin-top: 60px;
+      padding: 14px 36px;
+      font-size: 1.1rem;
+      background: linear-gradient(90deg, #ff914d, #ffcc70);
+      color: #000;
+      border-radius: 30px;
+      border: none;
+      font-weight: 600;
+      transition: all 0.3s ease;
+      z-index: 1;
+      position: relative;
+    }
+
+    .memory-btn:hover {
+      background: linear-gradient(90deg, #ffcc70, #ff914d);
+      transform: scale(1.07);
+      box-shadow: 0 0 20px rgba(255, 204, 112, 0.4);
+    }
+
+    footer {
+      text-align: center;
+      padding: 40px 20px;
+      color: #888;
+      font-size: 0.9rem;
+      background: #0b0b0b;
+      border-top: 1px solid rgba(255, 255, 255, 0.1);
+    }
+
+    footer span {
+      color: #ffcc70;
+    }
+
+    @keyframes float {
+      0% { transform: translateY(0); }
+      50% { transform: translateY(-10px); }
+      100% { transform: translateY(0); }
+    }
+
+    .paper {
+      animation: float 6s ease-in-out infinite;
+    }
+  </style>
+</head>
+<body>
+
+  <header>
+    <h1>📜 Paper Memory</h1>
+    <p>Setiap lembar kertas menyimpan kenangan — dan beberapa sebaiknya tidak pernah dibuka kembali.</p>
+  </header>
+
+  <section id="game" class="game-section">
+    <h2>Temukan Potongan Kenangan</h2>
+    <p>Klik salah satu kertas di bawah ini untuk membuka kenangan yang tersembunyi.  
+    Apa yang sebenarnya menghubungkan semua cerita ini?</p>
+
+    <div class="paper-grid">
+
+      <div class="paper" onclick="revealStory(this, 'Critical Eleven — Dua jiwa bertemu di ketinggian, mencoba memperbaiki sesuatu yang seharusnya dibiarkan hancur.')">
+        <h3>✈️ Critical Eleven</h3>
+        <p>Klik untuk membuka...</p>
+      </div>
+
+      <div class="paper" onclick="revealStory(this, 'Dublin Golden Bird — Seekor burung emas yang terus terbang menembus hujan, mencari kebebasan dari ketakutan sendiri.')">
+        <h3>🐦 Dublin Golden Bird</h3>
+        <p>Klik untuk membuka...</p>
+      </div>
+
+      <div class="paper" onclick="revealStory(this, 'Luna Torashyngu — Dalam cahaya bulan yang redup, ia menulis kisah yang tak pernah bisa disembuhkan oleh waktu.')">
+        <h3>🌙 Luna Torashyngu</h3>
+        <p>Klik untuk membuka...</p>
+      </div>
+
+      <div class="paper" onclick="revealStory(this, 'Fear Street Sagas — Bau darah lama dan janji masa kecil masih terperangkap di setiap lipatan kertas ini.')">
+        <h3>📖 Fear Street Sagas</h3>
+        <p>Klik untuk membuka...</p>
+      </div>
+
+      <div class="paper" onclick="revealStory(this, 'Children of Fear — Bisikan anak-anak yang hilang masih menggema di setiap sudut halaman yang robek.')">
+        <h3>🧸 Children of Fear</h3>
+        <p>Klik untuk membuka...</p>
+      </div>
+
+      <div class="paper" onclick="revealStory(this, 'IQ84 — Dua bulan di langit, satu realitas yang patah. Setiap kata adalah pintu menuju versi lain dari dirimu.')">
+        <h3>🌕 IQ 84</h3>
+        <p>Klik untuk membuka...</p>
+      </div>
+
+    </div>
+
+    <button class="memory-btn" onclick="shuffleStories()">
+      Acak Kenangan 🔁
+    </button>
+  </section>
+
+  <footer>
+    <p>© 2025 <span>Paper Memory</span> — Dibuat untuk mereka yang masih mengingat meski ingin melupakan.</p>
+  </footer>
+
+  <script>
+    function revealStory(element, story) {
+      element.innerHTML = `<h3>📜 Kenangan Terungkap</h3><p>${story}</p>`;
+      element.style.background = '#ffeccc';
+      element.style.color = '#3a2b1a';
+    }
+
+    function shuffleStories() {
+      const papers = document.querySelectorAll('.paper');
+      papers.forEach(paper => {
+        paper.style.transform = `rotate(${Math.random() * 10 - 5}deg)`;
+      });
+    }
+  </script>
+
+</body>
+</html>

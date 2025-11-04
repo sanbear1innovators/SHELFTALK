@@ -1,0 +1,588 @@
+<!doctype html>
+<html lang="id">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1" />
+  <title>Bookmark Panic — Game Buku</title>
+
+  <!-- Google font -->
+  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600;800&display=swap" rel="stylesheet">
+
+  <style>
+    :root{
+      --bg:#06060a;
+      --card:#0f1220;
+      --muted:#9aa0aa;
+      --accent1:#8b5cf6;
+      --accent2:#22d3ee;
+      --accent3:#ec4899;
+      --glass: rgba(255,255,255,0.03);
+      --radius:14px;
+      --maxwidth:1100px;
+      --ff: 'Poppins', system-ui, -apple-system, "Segoe UI", Roboto, Arial;
+    }
+    *{box-sizing:border-box}
+    html,body{height:100%}
+    body{
+      margin:0;
+      font-family:var(--ff);
+      background:
+        radial-gradient(600px 300px at 10% 10%, rgba(139,92,246,0.06), transparent 10%),
+        radial-gradient(500px 250px at 90% 80%, rgba(34,211,238,0.05), transparent 12%),
+        var(--bg);
+      color:#fff;
+      -webkit-font-smoothing:antialiased;
+    }
+
+    .wrap{
+      max-width:var(--maxwidth);
+      margin:36px auto;
+      padding:28px;
+    }
+
+    header.app-header{
+      display:flex;
+      gap:18px;
+      align-items:center;
+      justify-content:space-between;
+      margin-bottom:18px;
+    }
+    .brand{
+      display:flex;
+      gap:12px;
+      align-items:center;
+    }
+    .logo{
+      width:58px;height:58px;border-radius:12px;
+      background:linear-gradient(135deg,var(--accent1),var(--accent3));
+      display:grid;place-items:center;font-weight:800;font-size:20px;color:#07101a;
+      box-shadow:0 8px 30px rgba(139,92,246,0.12);
+    }
+    .title{
+      line-height:1;
+    }
+    .title h1{margin:0;font-size:20px;letter-spacing:0.6px}
+    .title p{margin:0;font-size:13px;color:var(--muted)}
+
+    .controls{
+      display:flex;gap:10px;align-items:center;
+    }
+    .btn{
+      background:linear-gradient(90deg,var(--accent2),var(--accent1));
+      color:#07101a;padding:10px 14px;border-radius:999px;font-weight:700;text-decoration:none;border:none;
+      cursor:pointer;display:inline-flex;gap:8px;align-items:center;
+    }
+    .btn.ghost{
+      background:transparent;border:1px solid rgba(255,255,255,0.06);color:var(--muted);
+    }
+    .small{padding:8px 10px;font-size:13px}
+
+    /* game area */
+    .game{
+      display:grid;
+      grid-template-columns: 1fr 360px;
+      gap:22px;
+    }
+    @media (max-width:980px){
+      .game{grid-template-columns:1fr}
+    }
+
+    /* book shelf area */
+    .shelf{
+      background: linear-gradient(180deg, rgba(255,255,255,0.02), rgba(255,255,255,0.01));
+      border-radius:var(--radius);
+      padding:18px;
+      border:1px solid rgba(255,255,255,0.04);
+      min-height:540px;
+    }
+    .shelf-head{
+      display:flex;justify-content:space-between;align-items:center;margin-bottom:12px;
+    }
+    .shelf-title{font-weight:800}
+    .timer-wrap{display:flex;gap:8px;align-items:center}
+    .timer{
+      background:rgba(255,255,255,0.03);padding:10px 12px;border-radius:999px;font-weight:700;
+      display:inline-flex;gap:10px;align-items:center;
+    }
+
+    .shelf-grid{
+      display:grid;
+      grid-template-columns: repeat(auto-fill, minmax(160px,1fr));
+      gap:14px;
+    }
+
+    .book-card{
+      background:linear-gradient(180deg, rgba(255,255,255,0.02), rgba(255,255,255,0.01));
+      border-radius:12px;overflow:hidden;padding:10px;border:1px solid rgba(255,255,255,0.03);display:flex;flex-direction:column;
+      min-height:220px;position:relative;
+    }
+    .book-thumb{
+      height:140px;border-radius:8px;overflow:hidden;background:#111;
+    }
+    .book-thumb img{width:100%;height:100%;object-fit:cover;display:block}
+    .book-meta{margin-top:10px}
+    .book-meta h4{margin:0;font-size:14px}
+    .book-meta p{margin:4px 0 0;color:var(--muted);font-size:12px}
+
+    /* bookmark area (right panel) */
+    .panel{
+      background: linear-gradient(180deg, rgba(255,255,255,0.02), rgba(255,255,255,0.01));
+      border-radius:var(--radius); padding:18px; border:1px solid rgba(255,255,255,0.04);
+      min-height:540px; display:flex;flex-direction:column;gap:12px;
+    }
+
+    .panel h3{margin:0;font-size:16px}
+    .panel .stack{display:flex;flex-direction:column;gap:12px;flex:1;overflow:auto;padding-right:6px}
+
+    .bookmark{
+      display:flex;align-items:center;gap:10px;padding:10px;border-radius:12px;background:rgba(255,255,255,0.02);
+      border:1px solid rgba(255,255,255,0.03);cursor:grab;user-select:none;
+    }
+    .bookmark:active{cursor:grabbing}
+    .b-thumb{width:48px;height:62px;background:#0b0b0b;border-radius:6px;overflow:hidden}
+    .b-thumb img{width:100%;height:100%;object-fit:cover}
+    .b-info{flex:1}
+    .b-info h4{margin:0;font-size:13px}
+    .b-info p{margin:4px 0 0;font-size:12px;color:var(--muted)}
+
+    /* drag state */
+    .dragging{opacity:0.6;transform:scale(1.02);box-shadow:0 16px 40px rgba(0,0,0,0.6)}
+
+    /* target highlight */
+    .book-card.highlight{outline:3px solid rgba(139,92,246,0.22);transform:translateY(-4px)}
+
+    /* info row bottom of panel */
+    .panel-footer{display:flex;gap:8px;align-items:center;justify-content:space-between}
+    .score{font-weight:800;font-size:20px}
+    .level{color:var(--muted)}
+
+    /* message overlay */
+    .overlay{
+      position:fixed;inset:0;display:grid;place-items:center;background:linear-gradient(180deg,rgba(2,6,23,0.6),rgba(2,6,23,0.85));
+      z-index:40;padding:24px;
+    }
+    .modal{
+      background:#07101a;padding:26px;border-radius:18px;max-width:780px;width:100%;border:1px solid rgba(255,255,255,0.04);
+      box-shadow:0 30px 80px rgba(2,6,23,0.6); color:#fff;
+    }
+    .modal h2{margin:0 0 8px}
+    .modal p{color:var(--muted);margin:0 0 16px}
+    .modal .actions{display:flex;gap:8px;justify-content:flex-end;margin-top:12px}
+
+    footer{margin-top:26px;text-align:center;color:var(--muted);font-size:13px}
+    small.note{display:block;margin-top:8px;color:#8890a0}
+  </style>
+</head>
+<body>
+  <div class="wrap">
+    <header class="app-header">
+      <div class="brand">
+        <div class="logo">BP</div>
+        <div class="title">
+          <h1>Bookmark Panic</h1>
+          <p>Game ringkas tentang buku — cocokkan bookmark dengan sampul sebelum waktu habis!</p>
+        </div>
+      </div>
+
+      <div class="controls">
+        <button id="btn-start" class="btn">Start Game</button>
+        <button id="btn-reset" class="btn ghost small">Reset Highscore</button>
+      </div>
+    </header>
+
+    <main class="game" role="main" aria-live="polite">
+      <!-- left: shelf -->
+      <section class="shelf" aria-label="Rak Buku">
+        <div class="shelf-head">
+          <div>
+            <div class="shelf-title">Rak Koleksi</div>
+            <div class="shelf-sub" style="color:var(--muted);font-size:13px;margin-top:6px">Taruh bookmark yang cocok ke buku yang benar.</div>
+          </div>
+          <div class="timer-wrap">
+            <div class="timer" aria-hidden="false"><strong>Waktu:</strong> <span id="time">60</span>s</div>
+          </div>
+        </div>
+
+        <div id="shelf-grid" class="shelf-grid" aria-label="Daftar Buku">
+          <!-- Book cards rendered by JS -->
+        </div>
+      </section>
+
+      <!-- right: bookmarks & stats -->
+      <aside class="panel" aria-label="Panel Bookmark">
+        <h3>Bookmarks</h3>
+        <div id="bookmark-stack" class="stack" aria-label="Tumpukan Bookmark">
+          <!-- Bookmark items rendered by JS -->
+        </div>
+
+        <div class="panel-footer" role="status">
+          <div>
+            <div class="score">Score: <span id="score">0</span></div>
+            <div class="level" id="level">Level 1</div>
+          </div>
+          <div style="text-align:right">
+            <div style="color:var(--muted);font-size:13px">Highscore: <strong id="highscore">0</strong></div>
+            <small class="note">Drag & drop bookmark → book</small>
+          </div>
+        </div>
+      </aside>
+    </main>
+
+    <footer>
+      <div>© Bookmark Panic — created with ♥</div>
+      <small class="note">Game sederhana untuk presentasi buku. Gambar sampul menggunakan sumber publik/placeholder.</small>
+    </footer>
+  </div>
+
+  <!-- modal templates -->
+  <div id="modal-start" class="overlay" style="display:none">
+    <div class="modal" role="dialog" aria-modal="true" aria-labelledby="start-title">
+      <h2 id="start-title">Bookmark Panic — Ready?</h2>
+      <p>Aturan singkat:</p>
+      <ul style="color:var(--muted);margin:6px 0 0 18px">
+        <li>Seret (drag) bookmark di panel kanan ke sampul buku yang cocok di rak.</li>
+        <li>Setiap jawaban benar menambah skor. Jawaban salah mengurangi waktu.</li>
+        <li>Tingkat meningkat setiap 8 jawaban benar → waktu tambah cepat.</li>
+      </ul>
+      <div class="actions">
+        <button id="modal-start-btn" class="btn">Mulai Sekarang</button>
+      </div>
+    </div>
+  </div>
+
+  <div id="modal-end" class="overlay" style="display:none">
+    <div class="modal" role="dialog" aria-modal="true" aria-labelledby="end-title">
+      <h2 id="end-title">Game Over</h2>
+      <p id="end-msg" style="color:var(--muted)">Skormu:</p>
+      <div class="actions">
+        <button id="play-again" class="btn">Main Lagi</button>
+        <button id="share-score" class="btn ghost">Salin Skor</button>
+      </div>
+    </div>
+  </div>
+
+  <script>
+    /*******************************************
+     * Bookmark Panic — Vanilla JS
+     * Data: book collection (title, author, image)
+     *******************************************/
+    const BOOKS = [
+      {
+        id: 'critical',
+        title: 'Critical Eleven',
+        author: 'Ika Natassa',
+        img: 'https://images.mubicdn.net/images/artworks/598140/cache-598140-1686654443/images-original.png'
+      },
+      {
+        id: 'dublin',
+        title: 'DUBLIN',
+        author: 'Yuli Pritania',
+        img: 'https://media.grasindo.id/images/books/399/12-1_1667880311.png'
+      },
+      {
+        id: 'golden',
+        title: 'Golden Bird',
+        author: 'Luna Torashyngu',
+        img: 'https://s3-ap-southeast-1.amazonaws.com/ebook-previews/3471/15364/1.jpg'
+      },
+      {
+        id: 'children',
+        title: 'The Children of Fear',
+        author: 'R.L. Stine',
+        img: 'https://d28hgpri8am2if.cloudfront.net/book_images/onix/cvr9781442473744/the-children-of-fear-9781442473744_hr.jpg'
+      },
+      {
+        id: 'iq84',
+        title: 'IQ 84',
+        author: 'Haruki Murakami',
+        img: 'https://encrypted-tbn3.gstatic.com/images?q=tbn:ANd9GcQag1YKPcjpCHVqdGyrwTlsZadOm-RtGgMgRZ_EpA6NSnzGpBKdiVq9CNxtDKjwVtIxAIjJPHKLJH0mebmBIO6FR2fbC3V3WbmXQM-NXuQ'
+      }
+    ];
+
+    // Game state
+    let score = 0;
+    let highscore = Number(localStorage.getItem('bp_highscore') || 0);
+    let timeLeft = 60;
+    let timerInterval = null;
+    let level = 1;
+    let correctCount = 0;
+    const TIME_PENALTY = 6; // wrong answer reduces time
+    const BASE_TIME = 60;
+
+    // DOM
+    const shelfGrid = document.getElementById('shelf-grid');
+    const bookmarkStack = document.getElementById('bookmark-stack');
+    const scoreEl = document.getElementById('score');
+    const timeEl = document.getElementById('time');
+    const levelEl = document.getElementById('level');
+    const highscoreEl = document.getElementById('highscore');
+    const btnStart = document.getElementById('btn-start');
+    const btnReset = document.getElementById('btn-reset');
+    const modalStart = document.getElementById('modal-start');
+    const modalStartBtn = document.getElementById('modal-start-btn');
+    const modalEnd = document.getElementById('modal-end');
+    const playAgain = document.getElementById('play-again');
+    const shareScore = document.getElementById('share-score');
+
+    highscoreEl.textContent = highscore;
+
+    // Utility: shuffle
+    function shuffle(arr){
+      const a = arr.slice();
+      for(let i=a.length-1;i>0;i--){
+        const j = Math.floor(Math.random()*(i+1));
+        [a[i],a[j]]=[a[j],a[i]];
+      }
+      return a;
+    }
+
+    // Render initial shelf and bookmarks (empty until start)
+    function renderShelf(books){
+      shelfGrid.innerHTML = '';
+      books.forEach(b=>{
+        const card = document.createElement('div');
+        card.className = 'book-card';
+        card.dataset.bookId = b.id;
+        card.innerHTML = `
+          <div class="book-thumb" aria-hidden="true"><img src="${b.img}" alt="${escapeHtml(b.title)}"></div>
+          <div class="book-meta">
+            <h4>${escapeHtml(b.title)}</h4>
+            <p>${escapeHtml(b.author)}</p>
+          </div>
+        `;
+        shelfGrid.appendChild(card);
+      });
+    }
+
+    function renderBookmarks(list){
+      bookmarkStack.innerHTML = '';
+      list.forEach(b=>{
+        const bk = document.createElement('div');
+        bk.className = 'bookmark';
+        bk.draggable = true;
+        bk.dataset.bookId = b.id; // this bookmark wants to match this id
+        bk.innerHTML = `
+          <div class="b-thumb"><img src="${b.img}" alt="${escapeHtml(b.title)}"></div>
+          <div class="b-info">
+            <h4>${escapeHtml(b.title)}</h4>
+            <p>${escapeHtml(b.author)}</p>
+          </div>
+        `;
+        attachDragHandlers(bk);
+        bookmarkStack.appendChild(bk);
+      });
+    }
+
+    // Escapes small malicious input (not strictly necessary here but good)
+    function escapeHtml(s){ return String(s).replaceAll('&','&amp;').replaceAll('<','&lt;').replaceAll('>','&gt;') }
+
+    // Drag & Drop handlers
+    let dragged = null;
+    function attachDragHandlers(el){
+      el.addEventListener('dragstart', (e)=>{
+        dragged = el;
+        el.classList.add('dragging');
+        e.dataTransfer.setData('text/plain', el.dataset.bookId);
+        // create ghost image
+        const crt = el.cloneNode(true);
+        crt.style.boxShadow = '0 20px 60px rgba(0,0,0,0.6)';
+        crt.style.transform = 'scale(0.9)';
+        document.body.appendChild(crt);
+        e.dataTransfer.setDragImage(crt, 30, 30);
+        setTimeout(()=>crt.remove(), 0);
+      });
+      el.addEventListener('dragend', ()=>{
+        if(el) el.classList.remove('dragging');
+        dragged = null;
+        document.querySelectorAll('.book-card').forEach(c=>c.classList.remove('highlight'));
+      });
+    }
+
+    // Shelf drop zones
+    function enableShelfDrops(){
+      document.querySelectorAll('.book-card').forEach(card=>{
+        card.addEventListener('dragover', (e)=>{
+          e.preventDefault();
+          card.classList.add('highlight');
+        });
+        card.addEventListener('dragleave', ()=>card.classList.remove('highlight'));
+        card.addEventListener('drop', (e)=>{
+          e.preventDefault();
+          card.classList.remove('highlight');
+          const bookmarkId = e.dataTransfer.getData('text/plain') || (dragged && dragged.dataset.bookId);
+          handleDrop(bookmarkId, card.dataset.bookId, card, dragged);
+        });
+      });
+    }
+
+    // Drop logic
+    function handleDrop(bookmarkId, targetId, cardEl, draggedEl){
+      if(!bookmarkId || !targetId) return;
+      if(bookmarkId === targetId){
+        // correct
+        score += 100 * level;
+        correctCount++;
+        showFeedback(cardEl, true);
+        // remove bookmark element
+        if(draggedEl && draggedEl.parentNode) draggedEl.parentNode.removeChild(draggedEl);
+        // visually mark matched book
+        cardEl.style.opacity = 0.5;
+        cardEl.style.filter = 'grayscale(0.1)';
+        cardEl.style.pointerEvents = 'none';
+        // bonus time on correct occasionally
+        if(correctCount % 4 === 0){
+          timeLeft += 6;
+        }
+      } else {
+        // wrong
+        timeLeft -= TIME_PENALTY;
+        score = Math.max(0, score - 30);
+        showFeedback(cardEl, false);
+      }
+      updateUI();
+      // check win (all bookmarks placed)
+      if(bookmarkStack.children.length === 0){
+        // next round/level or end
+        levelUpOrWin();
+      }
+    }
+
+    function showFeedback(cardEl, ok){
+      const el = document.createElement('div');
+      el.style.position='absolute';el.style.inset='10px';el.style.display='grid';el.style.placeItems='center';
+      el.style.fontSize='22px';el.style.fontWeight=900;
+      el.style.color = ok? 'rgba(34,197,94,0.95)' : 'rgba(239,68,68,0.95)';
+      el.textContent = ok? '✓ Correct' : '✕ Wrong';
+      cardEl.appendChild(el);
+      setTimeout(()=>el.remove(),700);
+    }
+
+    function levelUpOrWin(){
+      // increment level, refill bookmarks with shuffled books
+      level++;
+      levelEl.textContent = 'Level ' + level;
+      // reduce base time slightly (becomes harder)
+      timeLeft += Math.max(8, BASE_TIME - level*6);
+      // populate new bookmarks (shuffle)
+      const newBookmarks = shuffle(BOOKS).slice(0, Math.min(5, BOOKS.length));
+      renderBookmarks(newBookmarks);
+      enableShelfDrops();
+    }
+
+    // Timer
+    function startTimer(){
+      clearInterval(timerInterval);
+      timerInterval = setInterval(()=>{
+        timeLeft -= 1;
+        if(timeLeft <= 0){
+          timeLeft = 0; updateUI(); endGame();
+        } else updateUI();
+      }, 1000);
+    }
+
+    function stopTimer(){ clearInterval(timerInterval); timerInterval = null; }
+
+    // Game start/reset/end
+    function startGame(){
+      score = 0; level = 1; correctCount = 0;
+      timeLeft = BASE_TIME;
+      updateUI();
+      // render shelf (static order)
+      renderShelf(shuffle(BOOKS)); // bookshelf order random each game
+      // bookmarks subset
+      const bookmarks = shuffle(BOOKS).slice(0, Math.min(5, BOOKS.length));
+      renderBookmarks(bookmarks);
+      enableShelfDrops();
+      startTimer();
+    }
+
+    function endGame(){
+      stopTimer();
+      // show modal end
+      document.getElementById('end-msg').textContent = `Skor kamu: ${score}`;
+      modalEnd.style.display = 'grid';
+      // save highscore
+      if(score > highscore){
+        highscore = score;
+        localStorage.setItem('bp_highscore', highscore);
+        highscoreEl.textContent = highscore;
+      }
+    }
+
+    function resetHighscore(){
+      if(confirm('Reset highscore?')) {
+        highscore = 0;
+        localStorage.setItem('bp_highscore', 0);
+        highscoreEl.textContent = 0;
+        alert('Highscore direset.');
+      }
+    }
+
+    // UI update
+    function updateUI(){
+      scoreEl.textContent = score;
+      timeEl.textContent = Math.max(0, timeLeft);
+      levelEl.textContent = 'Level ' + level;
+      highscoreEl.textContent = highscore;
+    }
+
+    // Start modal handlers
+    btnStart.addEventListener('click', ()=>{ modalStart.style.display='grid' });
+    modalStartBtn.addEventListener('click', ()=>{
+      modalStart.style.display='none';
+      startGame();
+    });
+
+    // end modal buttons
+    playAgain.addEventListener('click', ()=>{
+      modalEnd.style.display='none';
+      startGame();
+    });
+    shareScore.addEventListener('click', ()=>{
+      navigator.clipboard && navigator.clipboard.writeText(`Bookmark Panic — Skorku: ${score}`).then(()=>{
+        alert('Skor disalin ke clipboard!');
+      }).catch(()=>alert('Gagal menyalin.'));
+    });
+
+    // reset highscore
+    btnReset.addEventListener('click', resetHighscore);
+
+    // small UX: allow clicking bookmark to "pick up" and then click target book
+    document.addEventListener('click', (e)=>{
+      // if clicked on bookmark (not dragging)
+      const bk = e.target.closest('.bookmark');
+      if(bk && !e.target.closest('.icon-btn')) {
+        // mark selected
+        document.querySelectorAll('.bookmark').forEach(x=>x.classList.remove('selected'));
+        bk.classList.add('selected');
+        // add click targets on books
+        document.querySelectorAll('.book-card').forEach(card=>{
+          card.onclick = ()=> {
+            const bookmarkId = bk.dataset.bookId;
+            handleDrop(bookmarkId, card.dataset.bookId, card, bk);
+          };
+        });
+      }
+    });
+
+    // keyboard support: press S to start
+    document.addEventListener('keydown', (e)=>{
+      if(e.key.toLowerCase()==='s'){ modalStart.style.display='none'; startGame(); }
+      if(e.key.toLowerCase()==='h'){ alert('Hint: Cocokkan judul dengan penulis / sampul.') }
+    });
+
+    // initial render (static bookshelf so page feels alive)
+    renderShelf(BOOKS);
+    // preload thumbnails for faster UX
+    (function preload(){
+      BOOKS.forEach(b=>{const i=new Image();i.src=b.img});
+    })();
+
+    // helper: enable drops when books re-render (called after renderBookmarks)
+    // called from code above: enableShelfDrops()
+
+    // small safety: prevent drag image leaving page in some browsers
+    document.addEventListener('dragover', e=>e.preventDefault());
+  </script>
+</body>
+</html>

@@ -1,0 +1,654 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="utf-8">
+  <meta content="width=device-width, initial-scale=1.0" name="viewport">
+  <title> SHELFTALK </title>
+  <meta name="description" content="">
+  <meta name="keywords" content="">
+
+  <!-- Favicons -->
+  <link href="assets/img/Logo.jpg" rel="icon">
+  <link href="assets/img/Logo.jpg" rel="apple-touch-icon">
+
+  <!-- Fonts -->
+  <link href="https://fonts.googleapis.com" rel="preconnect">
+  <link href="https://fonts.gstatic.com" rel="preconnect" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Roboto:ital,wght@0,100;0,300;0,400;0,500;0,700;0,900;1,100;1,300;1,400;1,500;1,700;1,900&family=Montserrat:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900&family=Raleway:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900&display=swap" rel="stylesheet">
+
+  <!-- Vendor CSS Files -->
+  <link href="assets/vendor/bootstrap/css/bootstrap.min.css" rel="stylesheet">
+  <link href="assets/vendor/bootstrap-icons/bootstrap-icons.css" rel="stylesheet">
+  <link href="assets/vendor/aos/aos.css" rel="stylesheet">
+  <link href="assets/vendor/glightbox/css/glightbox.min.css" rel="stylesheet">
+  <link href="assets/vendor/swiper/swiper-bundle.min.css" rel="stylesheet">
+  <link href="assets/vendor/drift-zoom/drift-basic.css" rel="stylesheet">
+
+  <!-- Main CSS File -->
+  <link href="assets/css/main.css" rel="stylesheet">
+
+  <!-- =======================================================
+  * Template Name: TheProperty
+  * Template URL: https://bootstrapmade.com/theproperty-bootstrap-real-estate-template/
+  * Updated: Aug 05 2025 with Bootstrap v5.3.7
+  * Author: BootstrapMade.com
+  * License: https://bootstrapmade.com/license/
+  ======================================================== -->
+</head>
+
+<body class="index-page">
+
+  <header id="header" class="header d-flex align-items-center fixed-top">
+    <div class="header-container container-fluid container-xl position-relative d-flex align-items-center justify-content-between">
+
+      <a href="index.html" class="logo d-flex align-items-center me-auto me-xl-0">
+        <!-- Uncomment the line below if you also wish to use an image logo -->
+        <!-- <img src="assets/img/logo.webp" alt=""> -->
+         <img src="assets/img/Logo.jpg" alt="">
+        <h1 class="sitename"><i>SHELFTALK.</i></h1>
+      </a>
+
+      <nav id="navmenu" class="navmenu">
+        <ul>
+          <li><a href="" class="active">Beranda</a></li>
+          <li><a href="">Tentang Kami ⭐</a></li>
+          <li><a href="">Buku Kami 🔍︎</a></li>
+          <li><a href="">Karya Buatan Kami 🕵🏻</a></li>
+          <li><a href="">Fun Facts ⚙️</a></li>
+          <li><a href="">Permainan Kami 🔬</a></li>
+         
+        </ul>
+        <i class="mobile-nav-toggle d-xl-none bi bi-list"></i>
+      </nav>
+
+
+    </div>
+  </header>
+
+  <main class="main">
+
+    <!-- Hero Section -->
+    <section id="hero" class="hero section">
+  <div class="container" data-aos="fade-up" data-aos-delay="100">
+    <div class="hero-content">
+      <div class="row align-items-center">
+        <div class="col-lg-6 hero-text" data-aos="fade-right" data-aos-delay="200">
+          <div class="hero-badge">
+            <i class="bi bi-star-fill"></i>
+            <span>Pelajaran Literasi 2025/2026</span>
+          </div>
+          <h1>Halo, Para Pemburu Cerita!</h1>
+          <p>
+            <mark>Ini bukan sekadar <i>website</i>, tetapi ini merupakan markas di mana para pembaca keren berkumpul. Yuk jelajahi, baca, dan bagikan semangat literasi bareng kita! 🪶💡</mark>
+          </p>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<style>
+/* === HERO SECTION STYLE === */
+#hero {
+  position: relative;
+  background: url("assets/img/Fotoyay.jpeg") center center / cover no-repeat;
+  padding: 120px 0;
+  color: #fff;
+  overflow: hidden;
+}
+
+/* Lapisan overlay opsional agar teks lebih jelas */
+#hero::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  background: rgba(0, 0, 0, 0.3);
+  z-index: 0;
+}
+mark {
+  background: linear-gradient(90deg, #b7fffe, #5aafae, #2d6c86);
+  color: #2d2d2d;
+  padding: 4px 8px;
+  border-radius: 6px;
+}
+
+#hero .container {
+  position: relative;
+  z-index: 1;
+}
+
+.hero-badge {
+  display: inline-flex;
+  align-items: center;
+  background: rgba(255, 255, 255, 0.15);
+  padding: 8px 14px;
+  border-radius: 30px;
+  font-size: 0.9rem;
+  backdrop-filter: blur(6px);
+}
+
+.hero-badge i {
+  color: #ffd700;
+  margin-right: 6px;
+}
+
+#hero h1 {
+  font-size: 2.8rem;
+  font-weight: 700;
+  margin-top: 20px;
+}
+
+#hero p {
+  font-size: 1.1rem;
+  margin-top: 15px;
+  line-height: 1.7;
+}
+</style>
+
+
+    <!-- Featured Properties Section -->
+    <section id="featured-properties" class="featured-properties section">
+
+      <!-- Section Title -->
+      <div class="container section-title" data-aos="fade-up">
+        <h2>Tentang Kami</h2>
+        <p> Pada bagian ini, kami akan membagikan informasi seputar kumpulan buku yang sudah kami baca!! 𐦂𖨆𐀪𖠋</p>
+      </div><!-- End Section Title -->
+
+      <div class="container" data-aos="fade-up" data-aos-delay="100">
+
+        <div class="grid-featured" data-aos="zoom-in" data-aos-delay="150">
+
+          <article class="highlight-card">
+            <div class="media">
+              <div class="badge-set">
+                <span class="flag featured">Featured</span>
+                <span class="flag premium">Popular</span>
+              </div>
+              <a href="property-details.html" class="image-link">
+                <img src="https://images.mubicdn.net/images/artworks/598140/cache-598140-1686654443/images-original.png" alt="Showcase Villa" class="img-fluid">
+              </a>
+              <div class="quick-specs">
+                <span><i class="bi bi-door-open"></i> Buku ini dibaca oleh Maria Dominika Elaine Suherman XI-2/27</span>
+              </div>
+            </div>
+            <div class="content">
+              <div class="top">
+                <div>
+                  <h3><a href="">Critical Eleven 📚</a></h3>
+                  <div class="loc"><i class="bi bi-geo-alt-fill"></i> Karya Ditulis Oleh Ika Natassa</div>
+                </div>
+                <div class="price">344 Halaman</div>
+              </div>
+              <p class="excerpt">
+Ale dan Anya pertama kali bertemu dalam penerbangan dari Jakarta menuju Sydney. Dalam waktu yang singkat, Anya mulai terpikat. 7 jam berikutnya mereka saling mengenal lewat percakapan dan canda tawa, tak menduga hidup mereka akan berubah selamanya.              </p>
+              <div class="cta">
+                <a href="property-details.html" class="btn-soft">Ketahui Lebih Lanjut</a>
+                <div class="meta">
+                  <span class="status for-sale">Romance Comedy</span>
+                </div>
+              </div>
+            </div>
+          </article><!-- End Highlight Card -->
+
+          <div class="mini-list">
+
+            <article class="mini-card" data-aos="fade-up" data-aos-delay="200">
+              <a href="" class="thumb">
+                <img src="https://media.grasindo.id/images/books/399/12-1_1667880311.png" alt="Loft Haven" class="img-fluid" loading="lazy">
+                <span class="label hot"><i class="bi bi-lightning-charge-fill"></i> Hot</span>
+              </a>
+              <div class="mini-body">
+                <h4><a href="property-details.html">DUBLIN</a></h4>
+                <div class="mini-loc"><i class="bi bi-geo"></i>Karya Ditulis Oleh Yuli Pritania</div>
+                <div class="mini-specs">
+                </div>
+                <div class="mini-foot">
+                  <a href="" class="mini-btn">Hlmn. 226</a>
+                </div>
+              </div>
+            </article><!-- End Mini Card -->
+
+            <article class="mini-card" data-aos="fade-up" data-aos-delay="250">
+              <a href="" class="thumb">
+                <img src="https://s3-ap-southeast-1.amazonaws.com/ebook-previews/3471/15364/1.jpg" alt="Suburban Home" class="img-fluid" loading="lazy">
+              </a>
+              <div class="mini-body">
+                <h4><a href="property-details.html">GOLDEN BIRD</a></h4>
+                <div class="mini-loc"><i class="bi bi-geo"></i> Karya Ditulis Oleh Luna Torashyngu</div>
+                
+                <div class="mini-foot">
+                  <a href="property-details.html" class="mini-btn">BUKA</a>
+                </div>
+              </div>
+            </article><!-- End Mini Card -->
+
+            <article class="mini-card" data-aos="fade-up" data-aos-delay="300">
+              <a href="" class="thumb">
+                <img src="https://d28hgpri8am2if.cloudfront.net/book_images/onix/cvr9781442473744/the-children-of-fear-9781442473744_hr.jpg" alt="Penthouse" class="img-fluid" loading="lazy">
+              </a>
+              <div class="mini-body">
+                <h4><a href="property-details.html">Children of Fear</a></h4>
+                <div class="mini-loc"><i class="bi bi-geo"></i>Karya Ditulis oleh R.L. Stine</div>
+               
+                <div class="mini-foot">
+                  <a href="property-details.html" class="mini-btn">BUKA</a>
+                </div>
+              </div>
+            </article><!-- End Mini Card -->
+
+            <article class="mini-card" data-aos="fade-up" data-aos-delay="300">
+              <a href="" class="thumb">
+                <img src="https://encrypted-tbn3.gstatic.com/images?q=tbn:ANd9GcQag1YKPcjpCHVqdGyrwTlsZadOm-RtGgMgRZ_EpA6NSnzGpBKdiVq9CNxtDKjwVtIxAIjJPHKLJH0mebmBIO6FR2fbC3V3WbmXQM-NXuQ" alt="Penthouse" class="img-fluid" loading="lazy">
+              </a>
+              <div class="mini-body">
+                <h4><a href="property-details.html">IQ 84</a></h4>
+                <div class="mini-loc"><i class="bi bi-geo"></i>Karya Ditulis oleh Haruki</div>
+               
+                <div class="mini-foot">
+                  <a href="property-details.html" class="mini-btn">BUKA</a>
+                </div>
+              </div>
+            </article><!-- End Mini Card -->
+          </div><!-- End Mini List -->
+
+        </div>
+
+
+    </section><!-- /Featured Properties Section -->
+    <style>
+#featured-properties {
+  background: url("assets/img/Jepi.png") center center / cover no-repeat;
+  padding-top: 80px;
+  padding-bottom: 80px;
+}
+#featured-properties:before {
+  content: "";
+  position: absolute;
+  inset: 50;
+  background: rgba(0, 0, 0, 0.3);
+  z-index: 0;
+}
+</style>
+
+
+
+    <!-- Featured Services Section -->
+    <section id="featured-services" class="featured-services section">
+
+      <!-- Section Title -->
+     <!-- Section Title -->
+<div class="container section-title" data-aos="fade-up">
+  <h2>Produk yang Kami Ciptakan</h2>
+  <p>Berikut ini adalah produk yang kami kembangkan, beserta alasan di balik pemilihan produk tersebut. Selamat membaca 📸</p>
+</div>
+<!-- End Section Title -->
+
+<div class="container" data-aos="fade-up" data-aos-delay="100">
+
+  <div class="row g-4 justify-content-center">
+
+    <!-- Service Item 01 -->
+    <div class="col-lg-3 col-md-6" data-aos="zoom-in" data-aos-delay="200">
+      <div class="service-card">
+        <div class="service-header">
+          <div class="service-icon">
+            <i class="bi bi-search"></i>
+          </div>
+          <div class="service-number">01</div>
+        </div>
+        <div class="service-content">
+          <h3><a href="">Mengapa Tujuan Utama Kami adalah <i>Website</i>?</a></h3>
+          <p style="text-align: justify;">
+            Bagi kami, teknologi memainkan peran penting dalam kehidupan remaja masa kini, di mana hampir seluruh aktivitas melibatkan dunia digital. Karena itu, kami ingin mengajak pembaca untuk merasakan bahwa membaca bukan hanya untuk menambah wawasan, tetapi juga sebagai bentuk hiburan dan ekspresi diri.
+          </p>
+        </div>
+        <div class="service-action">
+          <a href="service-details.html" class="service-btn">
+            <span>Pelajari Lebih Lanjut</span>
+            <i class="bi bi-arrow-right"></i>
+          </a>
+        </div>
+      </div>
+    </div>
+    <!-- End Service Item -->
+
+    <!-- Service Item 02 -->
+    <div class="col-lg-3 col-md-6" data-aos="zoom-in" data-aos-delay="300">
+      <div class="service-card featured">
+        <div class="service-header">
+          <div class="service-icon">
+            <i class="bi bi-graph-up"></i>
+          </div>
+          <div class="service-number">02</div>
+        </div>
+        <div class="service-content">
+          <h3><a href="service-details.html">Novel</a></h3>
+          <p style="text-align: justify;">
+            Kami menciptakan sebuah novel yang memuat gabungan dari kelima karya yang sebelumnya telah kami baca dan analisis. Bagi kami, novel bukan hanya sekadar tulisan, tetapi justru sebuah seni yang disampaikan melalui kata-kata. Karena itu, kami menciptakan karya cerita dengan alur, nilai, dan pesan yang mirip dan tentunya bermakna.
+          </p>
+        </div>
+        <div class="service-action">
+          <a href="service-details.html" class="service-btn">
+            <span>Paham!</span>
+            <i class="bi bi-arrow-right"></i>
+          </a>
+        </div>
+      </div>
+    </div>
+    <!-- End Service Item -->
+
+    <!-- Service Item 03 -->
+    <div class="col-lg-3 col-md-6" data-aos="zoom-in" data-aos-delay="400">
+      <div class="service-card">
+        <div class="service-header">
+          <div class="service-icon">
+            <i class="bi bi-key"></i>
+          </div>
+          <div class="service-number">03</div>
+        </div>
+        <div class="service-content">
+          <h3><a href="service-details.html">Games</a></h3>
+          <p style="text-align: justify;">
+            Kami juga mengembangkan game interaktif sebagai media edukasi yang menyenangkan. Melalui permainan ini, kami berharap dapat meningkatkan minat remaja untuk membaca dengan cara yang seru dan tidak membosankan.
+          </p>
+        </div>
+        <div class="service-action">
+          <a href="service-details.html" class="service-btn">
+            <span>Paham!</span>
+            <i class="bi bi-arrow-right"></i>
+          </a>
+        </div>
+      </div>
+    </div>
+    <!-- End Service Item -->
+
+  </div>
+
+<section>
+  aaaaa
+</section>
+</div>
+
+    </section><!-- /Featured Services Section -->
+<!-- 🎮 Featured Gamers Section -->
+<section id="featured-gamers" style="background:linear-gradient(180deg,#d4f8ff 0%,#45a2ba 100%);color:#fff;padding:80px 0;font-family:'Poppins',sans-serif;">
+
+  <style>
+    #featured-gamers .section-title {
+      text-align: center;
+      margin-bottom: 40px;
+    }
+    #featured-gamers h2 {
+      font-size: 2.5rem;
+      font-weight: 800;
+      background: linear-gradient(90deg,#adbdff,#60adff,#1a4878);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+    }
+    #featured-gamers p {
+      color: #000000;
+      font-size: 1rem;
+      margin-top: 10px;
+    }
+
+    .gamer-grid {
+      display: flex;
+      flex-wrap: wrap;
+      justify-content: center;
+      gap: 2rem;
+      max-width: 1200px;
+      margin: auto;
+    }
+
+    .gamer-card {
+      background: linear-gradient(180deg,rgba(255,255,255,0.05),rgba(255,255,255,0.02));
+      border: 1px solid rgba(255,255,255,0.08);
+      border-radius: 20px;
+      overflow: hidden;
+      width: 320px;
+      transition: 0.3s;
+      box-shadow: 0 10px 30px rgba(0,0,0,0.3);
+    }
+
+    .gamer-card:hover {
+      transform: translateY(-10px);
+      box-shadow: 0 20px 40px rgba(0,0,0,0.5);
+      border-color: #5ca4f6;
+    }
+
+    .gamer-img {
+      position: relative;
+      height: 200px;
+      overflow: hidden;
+    }
+
+    .gamer-img img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      transition: transform 0.5s ease;
+    }
+
+    .gamer-card:hover .gamer-img img {
+      transform: scale(1.1);
+    }
+
+    .badge {
+      position: absolute;
+      top: 12px;
+      left: 12px;
+      background: linear-gradient(90deg,#5cdff6,#486eec);
+      padding: 6px 12px;
+      border-radius: 999px;
+      font-size: 12px;
+      font-weight: 600;
+      text-transform: uppercase;
+    }
+
+    .gamer-info {
+      padding: 20px;
+      text-align: center;
+    }
+
+    .gamer-info h3 {
+      font-size: 1.3rem;
+      font-weight: 700;
+      margin: 0;
+      color: #fff;
+    }
+
+    .gamer-info p {
+      color: #9ca3af;
+      margin: 6px 0 14px;
+      font-size: 0.95rem;
+    }
+
+    .gamer-stats {
+      display: flex;
+      justify-content: space-between;
+      padding: 0 30px;
+      color: #d1d5db;
+      font-size: 0.9rem;
+      margin-bottom: 12px;
+    }
+
+    .tags {
+      display: flex;
+      justify-content: center;
+      gap: 8px;
+      flex-wrap: wrap;
+      margin-bottom: 14px;
+    }
+
+    .tag {
+      background: rgba(255,255,255,0.06);
+      border: 1px solid rgba(255,255,255,0.1);
+      border-radius: 999px;
+      padding: 5px 10px;
+      font-size: 12px;
+      color: #a1a1aa;
+    }
+
+    .profile-link {
+      text-decoration: none;
+      display: inline-block;
+      margin-top: 6px;
+      background: linear-gradient(90deg,#8680ff,#4869ec);
+      color: #fff;
+      padding: 8px 18px;
+      border-radius: 999px;
+      font-weight: 600;
+      transition: 0.2s;
+    }
+
+    .profile-link:hover {
+      background: linear-gradient(90deg,#a5f3ff,#5c9af6);
+    }
+
+    .contact-buttons {
+      position: absolute;
+      bottom: 12px;
+      left: 12px;
+      display: flex;
+      gap: 10px;
+    }
+
+    .contact-buttons a {
+      width: 38px;
+      height: 38px;
+      border-radius: 10px;
+      background: rgba(255,255,255,0.1);
+      display: grid;
+      place-items: center;
+      color: #fff;
+      transition: 0.2s;
+    }
+
+    .contact-buttons a:hover {
+      background: #8b5cf6;
+    }
+
+    .explore-btn {
+      display: inline-flex;
+      align-items: center;
+      gap: 10px;
+      background: linear-gradient(90deg,#22d3ee,#8b5cf6);
+      color: #fff;
+      text-decoration: none;
+      padding: 12px 20px;
+      border-radius: 999px;
+      font-weight: 700;
+      margin-top: 40px;
+      transition: 0.2s;
+    }
+
+    .explore-btn:hover {
+      background: linear-gradient(90deg,#80ceff,#8b5cf6);
+    }
+  </style>
+
+  <div class="container section-title">
+    <h2>🎮 Permainan Kami</h2>
+    <p>Berikut ini adalah permainan kami seputar dengan dunia membaca!</p>
+  </div>
+
+  <div class="gamer-grid">
+    <!-- Gamer 1 -->
+    <div class="gamer-card">
+      <div class="gamer-img">
+        <img src="assets/img/a (1).png" alt="LunaStrike">
+        <span class="badge">MVP</span>
+       
+      </div>
+      <div class="gamer-info">
+        <h3>BookMark Panic</h3>
+      
+        <a href="lupa.html" class="profile-link">View Profile</a>
+      </div>
+    </div>
+
+    <!-- Gamer 2 -->
+    <div class="gamer-card">
+      <div class="gamer-img">
+        <img src="assets/img/a (2).png" alt="NovaBlade">
+        <span class="badge">Certified</span>
+        
+      </div>
+      <div class="gamer-info">
+        <h3>Book Bound</h3>
+        
+        <a href="bookbound.html" class="profile-link">View Profile</a>
+      </div>
+    </div>
+<div class="gamer-card">
+      <div class="gamer-img">
+        <img src="assets/img/a (3).png" alt="NovaBlade">
+        <span class="badge">Certified</span>
+        
+      </div>
+      <div class="gamer-info">
+        <h3>Paper Memory</h3>
+        
+        <a href="pepermemori.html" class="profile-link">View Profile</a>
+      </div>
+    </div>
+  
+</section>
+<!-- 🎮 /Featured Gamers Section -->
+
+
+  </main>
+
+  <footer id="footer" class="footer position-relative">
+
+    <div class="footer-bottom">
+      <div class="container">
+        <div class="row align-items-center">
+          <div class="col-lg-6">
+            <div class="copyright">
+              <p>© <span>Copyright</span> <strong class="px-1 sitename">Kelompok Literasi XI-2</strong> <span>All Rights Reserved</span></p>
+            </div>
+          </div>
+          <div class="col-lg-6">
+            <div class="footer-bottom-links">
+              <a href="#">Privacy Policy</a>
+              <a href="#">Terms of Service</a>
+              <a href="#">Cookie Policy</a>
+            </div>
+            <div class="credits">
+              <!-- All the links in the footer should remain intact. -->
+              <!-- You can delete the links only if you've purchased the pro version. -->
+              <!-- Licensing information: https://bootstrapmade.com/license/ -->
+              <!-- Purchase the pro version with working PHP/AJAX contact form: [buy-url] -->
+              Designed by <a href="https://bootstrapmade.com/">Kelompok 2 XI-2</a>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+  </footer>
+
+  <!-- Scroll Top -->
+  <a href="#" id="scroll-top" class="scroll-top d-flex align-items-center justify-content-center"><i class="bi bi-arrow-up-short"></i></a>
+
+  <!-- Preloader -->
+  <div id="preloader"></div>
+
+  <!-- Vendor JS Files -->
+  <script src="assets/vendor/bootstrap/js/bootstrap.bundle.min.js"></script>
+  <script src="assets/vendor/php-email-form/validate.js"></script>
+  <script src="assets/vendor/aos/aos.js"></script>
+  <script src="assets/vendor/purecounter/purecounter_vanilla.js"></script>
+  <script src="assets/vendor/glightbox/js/glightbox.min.js"></script>
+  <script src="assets/vendor/swiper/swiper-bundle.min.js"></script>
+  <script src="assets/vendor/drift-zoom/Drift.min.js"></script>
+
+  <!-- Main JS File -->
+  <script src="assets/js/main.js"></script>
+
+</body>
+
+</html>

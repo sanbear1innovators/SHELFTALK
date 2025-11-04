@@ -1,0 +1,178 @@
+<!doctype html>
+<html lang="id">
+<head>
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width,initial-scale=1" />
+<title>Bookmark Panic — Connect the Dots</title>
+
+<link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600;800&display=swap" rel="stylesheet">
+
+<style>
+  :root{
+    --bg:#071017;
+    --panel:#0f1720;
+    --muted:#9aa3ad;
+    --accent1:#8b5cf6;
+    --accent2:#22d3ee;
+    --accent3:#ff7ab6;
+    --card-radius:14px;
+    --glass: rgba(255,255,255,0.03);
+    --maxw:1100px;
+    --ff: 'Poppins', system-ui, -apple-system, "Segoe UI", Roboto, Arial;
+  }
+  *{box-sizing:border-box}
+  body{
+    margin:0; font-family:var(--ff); background:
+      radial-gradient(600px 300px at 10% 10%, rgba(139,92,246,0.06), transparent 10%),
+      radial-gradient(500px 250px at 90% 80%, rgba(34,211,238,0.04), transparent 12%),
+      var(--bg);
+    color:#fff; min-height:100vh;
+  }
+
+  .wrap{max-width:var(--maxw);margin:28px auto;padding:22px;}
+
+  header{
+    display:flex;justify-content:space-between;align-items:center;gap:12px;margin-bottom:18px;
+  }
+  .brand{display:flex;gap:12px;align-items:center}
+  .logo{width:56px;height:56px;border-radius:12px;background:linear-gradient(135deg,var(--accent1),var(--accent3));display:grid;place-items:center;font-weight:800;color:#07101a}
+  h1{margin:0;font-size:20px}
+  p.lead{margin:0;color:var(--muted);font-size:13px}
+
+  .controls{display:flex;gap:8px;align-items:center}
+  .btn{background:linear-gradient(90deg,var(--accent2),var(--accent1));color:#07101a;padding:10px 12px;border-radius:999px;border:none;font-weight:700;cursor:pointer}
+  .btn.ghost{background:transparent;color:var(--muted);border:1px solid rgba(255,255,255,0.04)}
+
+  /* layout */
+  .game{display:grid;grid-template-columns:1fr 320px;gap:20px}
+  @media (max-width:980px){ .game{grid-template-columns:1fr} .right-panel{order:-1} }
+
+  /* left: board */
+  .board{
+    background:linear-gradient(180deg, rgba(255,255,255,0.02), rgba(255,255,255,0.01));
+    border-radius:var(--card-radius);padding:16px;border:1px solid rgba(255,255,255,0.04);
+    min-height:560px;position:relative;overflow:hidden;
+  }
+  .board-head{display:flex;justify-content:space-between;align-items:center;margin-bottom:10px}
+  .board-title{font-weight:800}
+  .board-sub{color:var(--muted);font-size:13px}
+
+  /* nodes area (relative) */
+  .nodes-area{position:relative;height:460px;border-radius:10px;background:linear-gradient(180deg, rgba(255,255,255,0.01), transparent);overflow:hidden}
+  canvas#line-canvas{position:absolute;inset:0;pointer-events:none;z-index:2}
+  /* node (book cover) */
+  .node{
+    position:absolute; width:120px; height:160px; border-radius:10px; overflow:hidden; cursor:pointer;
+    transition: transform .18s ease, box-shadow .18s ease;
+    display:flex;flex-direction:column;align-items:center;justify-content:flex-start; z-index:3;
+    border:1px solid rgba(255,255,255,0.04); background:#0b0b0b;
+  }
+  .node:hover{transform:translateY(-8px);box-shadow:0 18px 50px rgba(0,0,0,0.6)}
+  .node img{width:100%;height:100%;object-fit:cover;display:block}
+  .node .label{position:absolute;bottom:6px;left:6px;right:6px;background:rgba(0,0,0,0.45);padding:6px;border-radius:6px;font-size:12px;color:#fff;text-align:center;z-index:4}
+
+  /* right panel: bookmarks */
+  .right-panel{
+    background:linear-gradient(180deg, rgba(255,255,255,0.02), rgba(255,255,255,0.01));
+    border-radius:var(--card-radius);padding:16px;border:1px solid rgba(255,255,255,0.04);
+    min-height:560px;display:flex;flex-direction:column;gap:12px;
+  }
+  .panel-title{font-weight:800}
+  .bookmarks{display:flex;flex-direction:column;gap:10px;overflow:auto;padding-right:6px;flex:1}
+
+  .bookmark{
+    display:flex;gap:10px;align-items:center;background:rgba(255,255,255,0.02);padding:8px;border-radius:10px;border:1px solid rgba(255,255,255,0.03);
+    cursor:pointer;transition:transform .15s;
+  }
+  .bookmark:hover{transform:translateX(6px)}
+  .b-thumb{width:52px;height:72px;border-radius:6px;overflow:hidden;background:#111;flex-shrink:0}
+  .b-thumb img{width:100%;height:100%;object-fit:cover}
+  .b-info h4{margin:0;font-size:13px}
+  .b-info p{margin:4px 0 0;color:var(--muted);font-size:12px}
+
+  .bookmark.selected{outline:3px solid rgba(139,92,246,0.22);transform:translateX(0);box-shadow:0 14px 40px rgba(139,92,246,0.06)}
+
+  .panel-footer{display:flex;flex-direction:column;gap:8px}
+  .score-row{display:flex;justify-content:space-between;align-items:center}
+  .score{font-weight:800}
+  .hint{color:var(--muted);font-size:13px}
+
+  /* feedback toast */
+  .toast{
+    position:fixed;left:50%;transform:translateX(-50%);bottom:30px;background:#0b1220;padding:12px 18px;border-radius:10px;border:1px solid rgba(255,255,255,0.04);box-shadow:0 16px 40px rgba(0,0,0,0.6);z-index:80;display:none;
+  }
+
+  /* small helpers */
+  .muted{color:var(--muted)}
+  .kbd{background:rgba(255,255,255,0.03);padding:6px 8px;border-radius:6px;font-weight:700;color:#fff}
+
+</style>
+</head>
+<body>
+  <div class="wrap">
+    <header>
+      <div class="brand">
+        <div class="logo">BP</div>
+        <div>
+          <h1>Bookmark Panic — Connect</h1>
+          <p class="lead">Klik bookmark → lalu klik sampul buku untuk menghubungkan. Gaya connect-the-dots: cepat, asyik, andal.</p>
+        </div>
+      </div>
+
+      <div class="controls">
+        <button id="btn-start" class="btn">Mulai</button>
+        <button id="btn-reset" class="btn ghost">Reset Skor</button>
+      </div>
+    </header>
+
+    <main class="game">
+      <!-- left: board -->
+      <section class="board" aria-label="Papan Permainan">
+        <div class="board-head">
+          <div>
+            <div class="board-title">Papan Buku</div>
+            <div class="board-sub">Hubungkan bookmark ke sampul buku yang sesuai</div>
+          </div>
+          <div class="muted">Level: <span id="ui-level">1</span></div>
+        </div>
+
+        <div class="nodes-area" id="nodes-area" aria-live="polite">
+          <!-- canvas for lines -->
+          <canvas id="line-canvas"></canvas>
+          <!-- nodes dynamically injected -->
+        </div>
+      </section>
+
+      <!-- right: bookmarks -->
+      <aside class="right-panel" aria-label="Panel Bookmark">
+        <div>
+          <div class="panel-title">Bookmarks</div>
+          <div class="muted" style="font-size:13px">Klik satu lalu klik sampul target</div>
+        </div>
+
+        <div id="bookmarks" class="bookmarks" role="list">
+          <!-- generated -->
+        </div>
+
+        <div class="panel-footer">
+          <div class="score-row">
+            <div class="score">Skor: <span id="ui-score">0</span></div>
+            <div class="muted">Highscore: <span id="ui-highscore">0</span></div>
+          </div>
+          <div class="hint">Petunjuk: <span class="kbd">Klik</span> bookmark → klik node sampul. Kesalahan kurangi waktu.</div>
+        </div>
+      </aside>
+    </main>
+
+    <div style="height:18px"></div>
+    <footer style="text-align:center;color:var(--muted)">© Bookmark Panic — Connect Mode</footer>
+  </div>
+
+  <div id="toast" class="toast" role="status" aria-live="polite"></div>
+
+<script>
+/* ============================
+   DATA: buku & konfigurasi
+   ============================ */
+const BOOKS = [
+  {id:'critical', title:'Critical Eleven', author:'Ika Natassa', img:'https://images.mubicdn.net/images/artworks/598140/cache-598140-16
